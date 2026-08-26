@@ -1,0 +1,94 @@
+#root {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.church-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.church-header h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 24px;
+}
+
+.subtitle {
+  color: #7f8c8d;
+}
+
+.church-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.church-nav button {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.church-nav button.active {
+  background-color: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+.tab-content {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hero-box {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background-color: #f0f4f8;
+  border-left: 4px solid #3498db;
+  border-radius: 4px;
+}
+
+.verse {
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+.verse-ref {
+  text-align: right;
+  font-weight: bold;
+  margin-top: 0.5rem;
+  color: #555;
+}
+
+.schedule-list {
+  list-style: none;
+  padding: 0;
+}
+
+.schedule-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.location-info p {
+  line-height: 1.8;
+}
+
+.church-footer {
+  text-align: center;
+  margin-top: 3rem;
+  color: #aaa;
+  font-size: 0.9rem;
+}
