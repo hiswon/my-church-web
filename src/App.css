@@ -6,6 +6,24 @@
   color: #333;
 }
 
+/* 상단 헤더 이미지 스타일 */
+.header-img {
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover; /* 이미지가 비율에 맞게 잘 잘리도록 설정 */
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+/* 탭 내부 사진들 스타일 */
+.content-img {
+  width: 100%;
+  max-height: 350px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
 .church-header {
   text-align: center;
   margin-bottom: 2rem;
