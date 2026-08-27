@@ -110,3 +110,32 @@
   color: #aaa;
   font-size: 0.9rem;
 }
+.schedule-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #3498db;
+}
+
+.schedule-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.schedule-card ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.schedule-card li {
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed #e0e0e0;
+}
+
+.schedule-card li:last-child {
+  border-bottom: none;
+}
