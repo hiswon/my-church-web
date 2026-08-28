@@ -1,181 +1,237 @@
 #root {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
-  font-family: Arial, sans-serif;
-  color: #333;
+  padding: 1.5rem 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #2b2f33;
 }
 
-/* 상단 헤더 이미지 스타일 */
-.header-img {
-  width: 100%;
-  max-height: 280px;
-  object-fit: cover; /* 이미지가 비율에 맞게 잘 잘리도록 설정 */
-  border-radius: 12px;
-  margin-bottom: 20px;
-}
-
-/* 탭 내부 사진들 스타일 */
-.content-img {
-  width: 100%;
-  max-height: 350px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
+/* 상단 헤더 */
 .church-header {
   text-align: center;
   margin-bottom: 2rem;
 }
 
+.header-img {
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
 .church-header h1 {
-  font-size: 2.5rem;
-  color: #2c3e50;
-  margin-bottom: 24px;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #1a1d20;
+  margin: 0 0 6px 0;
 }
 
 .subtitle {
-  color: #7f8c8d;
-}
-
-.church-nav {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.church-nav button {
-  padding: 0.6rem 1.2rem;
-  border: 1px solid #ddd;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.church-nav button.active {
-  background-color: #3498db;
-  color: white;
-  border-color: #3498db;
-}
-
-.tab-content {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.hero-box {
-  margin-top: 1.5rem;
-  padding: 1.5rem;
-  background-color: #f0f4f8;
-  border-left: 4px solid #3498db;
-  border-radius: 4px;
-}
-
-.verse {
-  font-style: italic;
-  font-size: 1.1rem;
-}
-
-.verse-ref {
-  text-align: right;
-  font-weight: bold;
-  margin-top: 0.5rem;
-  color: #555;
-}
-
-.schedule-list {
-  list-style: none;
-  padding: 0;
-}
-
-.schedule-list li {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.8rem 0;
-  border-bottom: 1px solid #eee;
-}
-
-.location-info p {
-  line-height: 1.8;
-}
-
-.church-footer {
-  text-align: center;
-  margin-top: 3rem;
-  color: #aaa;
-  font-size: 0.9rem;
-}
-.schedule-card {
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 1.2rem;
-  margin-bottom: 1.5rem;
-  border-left: 4px solid #3498db;
-}
-
-.schedule-card h3 {
-  margin-top: 0;
-  margin-bottom: 0.8rem;
-  font-size: 1.2rem;
-  color: #2c3e50;
-}
-
-.schedule-card ul {
-  list-style-type: none;
-  padding-left: 0;
+  color: #6c757d;
+  font-size: 0.95rem;
   margin: 0;
 }
 
-.schedule-card li {
-  padding: 0.4rem 0;
-  border-bottom: 1px dashed #e0e0e0;
+/* 네비게이션 탭 (날렵한 직각 스타일) */
+.church-nav {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
 }
 
-.schedule-card li:last-child {
-  border-bottom: none;
+.church-nav button {
+  padding: 0.55rem 1rem;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  color: #4a5568;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.15s ease-in-out;
 }
 
-.schedule-card .card-img {
-  width: 100%;
-  max-height: 200px;
-  object-fit: cover;
+.church-nav button:hover {
+  border-color: #cbd5e0;
+  background-color: #f7fafc;
+}
+
+.church-nav button.active {
+  background-color: #2b6cb0;
+  color: #ffffff;
+  border-color: #2b6cb0;
+}
+
+/* 메인 카드 레이아웃 정렬 */
+.tab-content {
+  background: #ffffff;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
-  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* 관리자 버튼 및 바 */
+.content-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.text-left {
+  text-align: left;
+}
+
+/* 스케줄 블록 정렬 */
+.schedule-block-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* 날짜 카드 스타일 (이미지 폭과 동일하게 꽉 차도록 세팅) */
+.date-group-card {
+  background-color: #f8fafc;
+  border: 1px solid #edf2f7;
+  border-left: 3px solid #3182ce;
+  border-radius: 4px;
+  padding: 14px 16px;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+/* 날짜 타이틀 (세련되고 시원한 폰트) */
+.date-header {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #2d3748;
+  letter-spacing: -0.3px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* 세부 내용 라인 정렬 */
+.date-content-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.content-line {
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* ; 세부 항목 태그 (날렵한 사각 뱃지) */
+.item-tagged {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.category-title {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.detail-badge {
+  background-color: #ebf8ff;
+  color: #2b6cb0;
+  border: 1px solid #bee3f8;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.plain-text {
+  color: #4a5568;
+}
+
+/* 관리자 모드 스타일 */
 .admin-bar {
-  margin-top: 15px;
+  margin-top: 12px;
   text-align: right;
 }
 
 .admin-btn {
-  background-color: #2c3e50;
+  background-color: #4a5568;
   color: #fff;
   border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
+  padding: 5px 10px;
+  border-radius: 3px;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
 }
 
 .admin-btn.logout {
-  background-color: #e74c3c;
+  background-color: #e53e3e;
 }
 
-/* 암호 입력 모달 */
+.admin-editor-box {
+  background-color: #f7fafc;
+  border: 1px dashed #cbd5e0;
+  padding: 16px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.admin-editor-box label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.admin-editor-box textarea {
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px;
+  border: 1px solid #cbd5e0;
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.admin-tip {
+  font-size: 0.85rem;
+  color: #718096;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.save-btn {
+  background-color: #38a169;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-weight: 600;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* 푸터 */
+.church-footer {
+  text-align: center;
+  margin-top: 2.5rem;
+  color: #a0aec0;
+  font-size: 0.85rem;
+}
+
+/* 비밀번호 모달 */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.5);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -185,49 +241,23 @@
 .modal-content {
   background: white;
   padding: 20px;
-  border-radius: 8px;
-  width: 300px;
+  border-radius: 6px;
+  width: 280px;
   text-align: center;
 }
 
 .modal-content input {
-  width: 80%;
+  width: 85%;
   padding: 8px;
-  margin: 15px 0;
+  margin: 12px 0;
+  border: 1px solid #cbd5e0;
+  border-radius: 3px;
 }
 
 .modal-buttons button {
-  margin: 0 5px;
+  margin: 0 4px;
   padding: 6px 12px;
-}
-
-/* 관리자 편집 상자 */
-.admin-editor-box {
-  background-color: #eef9ff;
-  border: 2px dashed #3498db;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-.admin-editor-box label {
-  display: block;
-  margin-bottom: 12px;
-}
-
-.admin-editor-box textarea {
-  width: 100%;
-  margin-top: 5px;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
-.save-btn {
-  background-color: #2ecc71;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  font-weight: bold;
-  border-radius: 4px;
+  border-radius: 3px;
+  border: 1px solid #cbd5e0;
   cursor: pointer;
 }

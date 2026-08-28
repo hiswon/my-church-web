@@ -16,23 +16,41 @@ interface ScheduleData {
   monthly: string
   ministry: string
   yearly: string
+  members: string
 }
 
+type TabType = 'about' | 'monthly' | 'ministry' | 'yearly' | 'members'
+
+const defaultMonthly = `8.16/
+"지옥간증" 예배
+1캄보디아; 비랏 생선물병 (찬튼 포카칩)
+2태국; 랙 생선물병전달
+웰.엘샤이 예배
+3한국 ;희원 원화
+;
+8.17/
+"지옥간증" 예배
+1캄보디아; 비랏 생선물병 (찬튼 포카칩)
+2태국; 랙 생선물병전달
+웰.엘샤이 예배
+3한국 ;희원 원화`
+
 function App() {
-  const [activeTab, setActiveTab] = useState<'info' | 'time' | 'location' | 'schedule'>('schedule')
-  
+  const [activeTab, setActiveTab] = useState<TabType>('monthly')
+
   // 데이터 관리
   const [scheduleData, setScheduleData] = useState<ScheduleData>({
-    monthly: '8월/ 전도, 예배',
-    ministry: '26.8.2/ 웰, 티\n26.8.9/ 웰, 린\n26.8.16/ 웰, 엘샤이',
-    yearly: '1월/ 전도\n2월/ 전도'
+    monthly: defaultMonthly,
+    ministry: '',
+    yearly: '',
+    members: ''
   })
 
   // 관리자 관련 상태
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
   const [showPasswordModal, setShowPasswordModal] = useState<boolean>(false)
   const [passwordInput, setPasswordInput] = useState<string>('')
-  
+
   // 수정용 폼 상태
   const [editForm, setEditForm] = useState<ScheduleData>(scheduleData)
 
@@ -43,9 +61,15 @@ function App() {
         const docRef = doc(db, 'church', 'schedule')
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
-          const fetched = docSnap.data() as ScheduleData
-          setScheduleData(fetched)
-          setEditForm(fetched)
+          const fetched = docSnap.data() as Partial<ScheduleData>
+          const loadedData: ScheduleData = {
+            monthly: fetched.monthly || defaultMonthly,
+            ministry: fetched.ministry || '',
+            yearly: fetched.yearly || '',
+            members: fetched.members || ''
+          }
+          setScheduleData(loadedData)
+          setEditForm(loadedData)
         }
       } catch (error) {
         console.error('Firebase 데이터 로딩 오류:', error)
@@ -56,7 +80,6 @@ function App() {
 
   // 2. 비밀번호 확인
   const handleAdminLogin = () => {
-    // 원하는 암호로 설정하세요 (예: 1234)
     if (passwordInput === '1234') {
       setIsAdmin(true)
       setShowPasswordModal(false)
@@ -79,6 +102,55 @@ function App() {
     }
   }
 
+  // 날짜(/) 및 항목(;) 단위 파싱 함수
+  const renderMultiLineSchedule = (text: string) => {
+    if (!text) return <p>등록된 내용이 없습니다.</p>
+
+    const blocks = text.split('/').map(b => b.trim()).filter(Boolean)
+
+    return (
+      <div className="schedule-block-container">
+        {blocks.map((block, idx) => {
+          const lines = block.split('\n').map(l => l.trim()).filter(Boolean)
+          if (lines.length === 0) return null
+
+          const dateHeader = lines[0]
+          const contentLines = lines.slice(1)
+
+          return (
+            <div key={idx} className="date-group-card">
+              <div className="date-header">🗓️ {dateHeader}</div>
+              <div className="date-content-list">
+                {contentLines.map((line, lIdx) => {
+                  if (line === ';') return null
+
+                  if (line.includes(';')) {
+                    const parts = line.split(';')
+                    const category = parts[0].trim()
+                    const detail = parts.slice(1).join(';').trim()
+
+                    return (
+                      <div key={lIdx} className="content-line item-tagged">
+                        {category && <span className="category-title">{category}</span>}
+                        {detail && <span className="detail-badge">{detail}</span>}
+                      </div>
+                    )
+                  }
+
+                  return (
+                    <div key={lIdx} className="content-line plain-text">
+                      {line}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
   return (
     <div className="church-container">
       {/* 헤더 */}
@@ -86,7 +158,7 @@ function App() {
         <img src={headerImg} alt="Moving Church 메인" className="header-img" />
         <h1>Moving Church</h1>
         <p className="subtitle">하나님의 사랑이 가득한 공동체</p>
-        
+
         {/* 관리자 모드 접속 버튼 */}
         <div className="admin-bar">
           {!isAdmin ? (
@@ -123,119 +195,127 @@ function App() {
 
       {/* 네비게이션 탭 */}
       <nav className="church-nav">
-        <button className={activeTab === 'schedule' ? 'active' : ''} onClick={() => setActiveTab('schedule')}>
-          사역 및 일정
+        <button className={activeTab === 'about' ? 'active' : ''} onClick={() => setActiveTab('about')}>
+          교회소개
         </button>
-        <button className={activeTab === 'info' ? 'active' : ''} onClick={() => setActiveTab('info')}>
-          교회 소개
+        <button className={activeTab === 'monthly' ? 'active' : ''} onClick={() => setActiveTab('monthly')}>
+          이번달일정
         </button>
-        <button className={activeTab === 'time' ? 'active' : ''} onClick={() => setActiveTab('time')}>
-          예배 안내
+        <button className={activeTab === 'ministry' ? 'active' : ''} onClick={() => setActiveTab('ministry')}>
+          사역내용
         </button>
-        <button className={activeTab === 'location' ? 'active' : ''} onClick={() => setActiveTab('location')}>
-          오시는 길
+        <button className={activeTab === 'yearly' ? 'active' : ''} onClick={() => setActiveTab('yearly')}>
+          2026주요사업
+        </button>
+        <button className={activeTab === 'members' ? 'active' : ''} onClick={() => setActiveTab('members')}>
+          멤버
         </button>
       </nav>
 
       {/* 메인 콘텐츠 */}
       <main className="church-content">
-        {activeTab === 'schedule' && (
-          <section className="tab-content">
-            <h2>교회 사역 & 일정 안내</h2>
-
-            {/* 관리자 모드일 때 나타나는 데이터 수정 폼 */}
-            {isAdmin && (
-              <div className="admin-editor-box">
-                <h3>✏️ 관리자 내용 수정하기</h3>
-                <label>
-                  <strong>이번 달 일정:</strong>
-                  <textarea
-                    rows={3}
-                    value={editForm.monthly}
-                    onChange={(e) => setEditForm({ ...editForm, monthly: e.target.value })}
-                  />
-                </label>
-                <label>
-                  <strong>사역 내용:</strong>
-                  <textarea
-                    rows={4}
-                    value={editForm.ministry}
-                    onChange={(e) => setEditForm({ ...editForm, ministry: e.target.value })}
-                  />
-                </label>
-                <label>
-                  <strong>2026 주요 사업:</strong>
-                  <textarea
-                    rows={4}
-                    value={editForm.yearly}
-                    onChange={(e) => setEditForm({ ...editForm, yearly: e.target.value })}
-                  />
-                </label>
-                <button className="save-btn" onClick={handleSaveData}>
-                  💾 저장하기
-                </button>
-              </div>
-            )}
-
-            {/* 일반 사용자 화면 카드 */}
-            <div className="schedule-card">
-              <img src={DRIVE_IMG_1} alt="이번달 일정" className="card-img" />
-              <h3>🗓️ 이번 달 일정</h3>
-              <ul>
-                {scheduleData.monthly.split('\n').map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="schedule-card">
-              <img src={DRIVE_IMG_2} alt="사역 내용" className="card-img" />
-              <h3>🤝 사역 내용</h3>
-              <ul>
-                {scheduleData.ministry.split('\n').map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="schedule-card">
-              <img src={DRIVE_IMG_3} alt="2026 주요 사업" className="card-img" />
-              <h3>📌 2026 주요 사업</h3>
-              <ul>
-                {scheduleData.yearly.split('\n').map((item, idx) => (
-                  <li key={idx}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </section>
+        {/* 관리자 모드 데이터 수정 폼 */}
+        {isAdmin && (
+          <div className="admin-editor-box">
+            <h3>✏️ 관리자 내용 수정하기</h3>
+            <p className="admin-tip">
+              💡 작성 방법:<br />
+              - 날짜 끝에는 <code>/</code>를 붙여주세요 (예: <code>8.16/</code>).<br />
+              - 세부 항목 구별은 <code>;</code>를 사용해 주세요 (예: <code>1캄보디아; 비랏 생선물병</code>).
+            </p>
+            <label>
+              <strong>이번 달 일정:</strong>
+              <textarea
+                rows={8}
+                value={editForm.monthly}
+                onChange={(e) => setEditForm({ ...editForm, monthly: e.target.value })}
+              />
+            </label>
+            <label>
+              <strong>사역 내용:</strong>
+              <textarea
+                rows={8}
+                value={editForm.ministry}
+                onChange={(e) => setEditForm({ ...editForm, ministry: e.target.value })}
+              />
+            </label>
+            <label>
+              <strong>2026 주요 사업:</strong>
+              <textarea
+                rows={8}
+                value={editForm.yearly}
+                onChange={(e) => setEditForm({ ...editForm, yearly: e.target.value })}
+              />
+            </label>
+            <label>
+              <strong>멤버 목록:</strong>
+              <textarea
+                rows={8}
+                value={editForm.members}
+                onChange={(e) => setEditForm({ ...editForm, members: e.target.value })}
+              />
+            </label>
+            <button className="save-btn" onClick={handleSaveData}>
+              💾 저장하기
+            </button>
+          </div>
         )}
 
-        {/* 기타 탭 (소개, 예배, 오시는 길) */}
-        {activeTab === 'info' && (
+        {/* 1. 교회소개 */}
+        {activeTab === 'about' && (
           <section className="tab-content">
-            <h2>교회에 오신 것을 환영합니다</h2>
+            <h2>교회 소개</h2>
             <img src={introImg} alt="교회 소개" className="content-img" />
             <p>우리 교회는 말씀을 중심으로 이웃을 섬기며 사랑을 나누는 공동체입니다.</p>
-          </section>
-        )}
+            <hr style={{ margin: '30px 0', border: '0', borderTop: '1px solid #eee' }} />
 
-        {activeTab === 'time' && (
-          <section className="tab-content">
-            <h2>예배 시간 안내</h2>
+            <h2>예배 안내</h2>
             <img src={worshipImg} alt="예배 모습" className="content-img" />
-          </section>
-        )}
+            <hr style={{ margin: '30px 0', border: '0', borderTop: '1px solid #eee' }} />
 
-        {activeTab === 'location' && (
-          <section className="tab-content">
             <h2>오시는 길</h2>
             <img src={locationImg} alt="약도" className="content-img" />
+          </section>
+        )}
+
+        {/* 2. 이번달일정 */}
+        {activeTab === 'monthly' && (
+          <section className="tab-content text-left">
+            <h2>🗓️ 이번 달 일정</h2>
+            <img src={DRIVE_IMG_1} alt="이번달 일정" className="content-img" />
+            {renderMultiLineSchedule(scheduleData.monthly)}
+          </section>
+        )}
+
+        {/* 3. 사역내용 */}
+        {activeTab === 'ministry' && (
+          <section className="tab-content text-left">
+            <h2>🤝 사역 내용</h2>
+            <img src={DRIVE_IMG_2} alt="사역 내용" className="content-img" />
+            {renderMultiLineSchedule(scheduleData.ministry)}
+          </section>
+        )}
+
+        {/* 4. 2026주요사업 */}
+        {activeTab === 'yearly' && (
+          <section className="tab-content text-left">
+            <h2>📌 2026 주요 사업</h2>
+            <img src={DRIVE_IMG_3} alt="2026 주요 사업" className="content-img" />
+            {renderMultiLineSchedule(scheduleData.yearly)}
+          </section>
+        )}
+
+        {/* 5. 멤버 */}
+        {activeTab === 'members' && (
+          <section className="tab-content text-left">
+            <h2>👥 멤버 소개</h2>
+            {renderMultiLineSchedule(scheduleData.members)}
           </section>
         )}
       </main>
 
       <footer className="church-footer">
-        <p>&copy; 2026 Moving Church. All rights reserved.</p>
+        <p>© 2026 Moving Church. All rights reserved.</p>
       </footer>
     </div>
   )
