@@ -21,19 +21,11 @@ interface ScheduleData {
 
 type TabType = 'about' | 'monthly' | 'ministry' | 'yearly' | 'members'
 
-const defaultMonthly = `8.16/
-"지옥간증" 예배
-1캄보디아; 비랏 생선물병 (찬튼 포카칩)
-2태국; 랙 생선물병전달
-웰.엘샤이 예배
-3한국 ;희원 원화
+const defaultMonthly = `1월/ 전도, 찬양
 ;
-8.17/
-"지옥간증" 예배
-1캄보디아; 비랏 생선물병 (찬튼 포카칩)
-2태국; 랙 생선물병전달
-웰.엘샤이 예배
-3한국 ;희원 원화`
+2월/ 전도, 찬양
+;
+3월/ 전도, 찬양`
 
 function App() {
   const [activeTab, setActiveTab] = useState<TabType>('monthly')
@@ -102,44 +94,43 @@ function App() {
     }
   }
 
-  // 날짜(/) 및 항목(;) 단위 파싱 함수
-  const renderMultiLineSchedule = (text: string) => {
+  // 제목(/) 및 항목(;) 단위 파싱 함수
+  const renderScheduleContent = (text: string) => {
     if (!text) return <p>등록된 내용이 없습니다.</p>
 
-    const blocks = text.split('/').map(b => b.trim()).filter(Boolean)
+    // 독립된 세미콜론(;) 단위로 영역 블록 분할
+    const blocks = text.split('\n;').map(b => b.trim()).filter(Boolean)
 
     return (
       <div className="schedule-block-container">
         {blocks.map((block, idx) => {
-          const lines = block.split('\n').map(l => l.trim()).filter(Boolean)
-          if (lines.length === 0) return null
+          if (!block || block === ';') return null
 
-          const dateHeader = lines[0]
-          const contentLines = lines.slice(1)
+          // / 기준으로 제목과 내용을 분리
+          const slashIndex = block.indexOf('/')
+          let title = ''
+          let body = block
+
+          if (slashIndex !== -1) {
+            title = block.substring(0, slashIndex).trim()
+            body = block.substring(slashIndex + 1).trim()
+          }
+
+          // 내용 부분을 ; 기준으로 개별 항목 분할
+          const items = body
+            .split(';')
+            .map(item => item.trim())
+            .filter(Boolean)
 
           return (
             <div key={idx} className="date-group-card">
-              <div className="date-header">🗓️ {dateHeader}</div>
+              {title && <div className="date-header">📌 {title}</div>}
               <div className="date-content-list">
-                {contentLines.map((line, lIdx) => {
-                  if (line === ';') return null
-
-                  if (line.includes(';')) {
-                    const parts = line.split(';')
-                    const category = parts[0].trim()
-                    const detail = parts.slice(1).join(';').trim()
-
-                    return (
-                      <div key={lIdx} className="content-line item-tagged">
-                        {category && <span className="category-title">{category}</span>}
-                        {detail && <span className="detail-badge">{detail}</span>}
-                      </div>
-                    )
-                  }
-
+                {items.map((item, itemIdx) => {
+                  // 항목 내 줄바꿈이 있을 경우 그대로 유지하여 출력
                   return (
-                    <div key={lIdx} className="content-line plain-text">
-                      {line}
+                    <div key={itemIdx} className="content-line item-tagged">
+                      <span className="detail-badge">{item}</span>
                     </div>
                   )
                 })}
@@ -219,9 +210,10 @@ function App() {
           <div className="admin-editor-box">
             <h3>✏️ 관리자 내용 수정하기</h3>
             <p className="admin-tip">
-              💡 작성 방법:<br />
-              - 날짜 끝에는 <code>/</code>를 붙여주세요 (예: <code>8.16/</code>).<br />
-              - 세부 항목 구별은 <code>;</code>를 사용해 주세요 (예: <code>1캄보디아; 비랏 생선물병</code>).
+              💡 작성 형식을 맞춰주세요:<br />
+              - 제목/월 구별: <code>제목/</code> (예: <code>1월/</code>)<br />
+              - 항목 구별: <code>;</code> 기호 사용<br />
+              - 블록 구별: 줄바꿈 후 단독 <code>;</code> 입력
             </p>
             <label>
               <strong>이번 달 일정:</strong>
@@ -283,7 +275,7 @@ function App() {
           <section className="tab-content text-left">
             <h2>🗓️ 이번 달 일정</h2>
             <img src={DRIVE_IMG_1} alt="이번달 일정" className="content-img" />
-            {renderMultiLineSchedule(scheduleData.monthly)}
+            {renderScheduleContent(scheduleData.monthly)}
           </section>
         )}
 
@@ -292,7 +284,7 @@ function App() {
           <section className="tab-content text-left">
             <h2>🤝 사역 내용</h2>
             <img src={DRIVE_IMG_2} alt="사역 내용" className="content-img" />
-            {renderMultiLineSchedule(scheduleData.ministry)}
+            {renderScheduleContent(scheduleData.ministry)}
           </section>
         )}
 
@@ -301,7 +293,7 @@ function App() {
           <section className="tab-content text-left">
             <h2>📌 2026 주요 사업</h2>
             <img src={DRIVE_IMG_3} alt="2026 주요 사업" className="content-img" />
-            {renderMultiLineSchedule(scheduleData.yearly)}
+            {renderScheduleContent(scheduleData.yearly)}
           </section>
         )}
 
@@ -309,7 +301,7 @@ function App() {
         {activeTab === 'members' && (
           <section className="tab-content text-left">
             <h2>👥 멤버 소개</h2>
-            {renderMultiLineSchedule(scheduleData.members)}
+            {renderScheduleContent(scheduleData.members)}
           </section>
         )}
       </main>
