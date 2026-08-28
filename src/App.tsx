@@ -21,11 +21,14 @@ interface ScheduleData {
 
 type TabType = 'about' | 'monthly' | 'ministry' | 'yearly' | 'members'
 
-const defaultMonthly = `1월/ 전도, 찬양
+const defaultMonthly = `1월/ 전도
+찬양
 ;
-2월/ 전도, 찬양
+2월/ 기도
+섬김
 ;
-3월/ 전도, 찬양`
+3월/ 예배
+교제`
 
 function App() {
   const [activeTab, setActiveTab] = useState<TabType>('monthly')
@@ -94,19 +97,19 @@ function App() {
     }
   }
 
-  // 제목(/) 및 항목(;) 단위 파싱 함수
+  // 제목(/) 및 줄바꿈/항목(;) 단위 파싱 함수
   const renderScheduleContent = (text: string) => {
     if (!text) return <p>등록된 내용이 없습니다.</p>
 
-    // 독립된 세미콜론(;) 단위로 영역 블록 분할
-    const blocks = text.split('\n;').map(b => b.trim()).filter(Boolean)
+    // 세미콜론(;) 기준으로 세션 블록 분할
+    const blocks = text.split(';').map(b => b.trim()).filter(Boolean)
 
     return (
       <div className="schedule-block-container">
         {blocks.map((block, idx) => {
-          if (!block || block === ';') return null
+          if (!block) return null
 
-          // / 기준으로 제목과 내용을 분리
+          // / 기준으로 제목과 본문을 분리
           const slashIndex = block.indexOf('/')
           let title = ''
           let body = block
@@ -116,24 +119,21 @@ function App() {
             body = block.substring(slashIndex + 1).trim()
           }
 
-          // 내용 부분을 ; 기준으로 개별 항목 분할
-          const items = body
-            .split(';')
-            .map(item => item.trim())
+          // 엔터(줄바꿈) 단위로 세부 줄 분할
+          const lines = body
+            .split('\n')
+            .map(line => line.trim())
             .filter(Boolean)
 
           return (
             <div key={idx} className="date-group-card">
               {title && <div className="date-header">📌 {title}</div>}
               <div className="date-content-list">
-                {items.map((item, itemIdx) => {
-                  // 항목 내 줄바꿈이 있을 경우 그대로 유지하여 출력
-                  return (
-                    <div key={itemIdx} className="content-line item-tagged">
-                      <span className="detail-badge">{item}</span>
-                    </div>
-                  )
-                })}
+                {lines.map((line, lineIdx) => (
+                  <div key={lineIdx} className="content-line item-tagged">
+                    <span className="detail-badge">{line}</span>
+                  </div>
+                ))}
               </div>
             </div>
           )
@@ -210,10 +210,10 @@ function App() {
           <div className="admin-editor-box">
             <h3>✏️ 관리자 내용 수정하기</h3>
             <p className="admin-tip">
-              💡 작성 형식을 맞춰주세요:<br />
-              - 제목/월 구별: <code>제목/</code> (예: <code>1월/</code>)<br />
-              - 항목 구별: <code>;</code> 기호 사용<br />
-              - 블록 구별: 줄바꿈 후 단독 <code>;</code> 입력
+              💡 작성 방법:<br />
+              - 제목: <code>1월/</code><br />
+              - 내용을 줄바꿈(엔터)하면 화면에도 다음 줄로 표시됩니다.<br />
+              - 블록 끝 구분: <code>;</code> 기호 입력
             </p>
             <label>
               <strong>이번 달 일정:</strong>
