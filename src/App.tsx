@@ -147,7 +147,7 @@ function App() {
       <header className="church-header">
         <img src={headerImg} alt="Moving Church 메인" className="header-img" />
         <h1>Moving Church</h1>
-        <p className="subtitle">봄날의 따스함처럼, 하나님의 사랑이 가득한 공동체</p>
+        <p className="subtitle">하나님의 당신을 사랑하십니다.</p>
 
         {/* 관리자 모드 접속 버튼 */}
         <div className="admin-bar">
