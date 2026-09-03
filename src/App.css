@@ -1,56 +1,77 @@
+/* 1. 기본 스타일 초기화 (Reset) */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+  background-color: #f8fafc;
+}
+
+/* 2. 전체 레이아웃 컨테이너 */
 #root {
   max-width: 800px;
   margin: 0 auto;
-  padding: 1.5rem 1rem;
+  padding: 1.25rem 0.75rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: #2b2f33;
 }
 
-/* 상단 헤더 */
+/* 3. 상단 헤더 */
 .church-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .header-img {
   width: 100%;
   max-height: 240px;
   object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
 }
 
 .church-header h1 {
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: -0.5px;
   color: #1a1d20;
-  margin: 0 0 6px 0;
+  margin-bottom: 4px;
 }
 
 .subtitle {
   color: #6c757d;
-  font-size: 0.95rem;
-  margin: 0;
+  font-size: 0.9rem;
 }
 
-/* 네비게이션 탭 (날렵한 직각 스타일) */
+/* 4. 네비게이션 탭 (모바일 터치 스와이프 지원) */
 .church-nav {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0.4rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 6px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.church-nav::-webkit-scrollbar {
+  display: none; /* 스크롤바 숨김 */
 }
 
 .church-nav button {
-  padding: 0.55rem 1rem;
+  flex: 0 0 auto;
+  padding: 0.55rem 0.9rem;
   border: 1px solid #e2e8f0;
   background-color: #ffffff;
   color: #4a5568;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
   transition: all 0.15s ease-in-out;
 }
@@ -66,58 +87,74 @@
   border-color: #2b6cb0;
 }
 
-/* 메인 카드 레이아웃 정렬 */
+/* 5. 메인 본문 카드 레이아웃 */
 .tab-content {
   background: #ffffff;
-  padding: 1.5rem;
+  padding: 1.25rem;
   border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .content-img {
   width: 100%;
-  max-height: 300px;
+  max-height: 320px;
   object-fit: cover;
-  border-radius: 4px;
-  margin-bottom: 20px;
+  border-radius: 6px;
+  margin-bottom: 16px;
 }
 
 .text-left {
   text-align: left;
 }
 
-/* 스케줄 블록 정렬 */
+/* 6. 미디어 컨테이너 (유튜브 반응형 16:9) */
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* 7. 스케줄 카드 목록 */
 .schedule-block-container {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 16px;
+  gap: 12px;
+  margin-top: 12px;
 }
 
-/* 날짜 카드 스타일 (이미지 폭과 동일하게 꽉 차도록 세팅) */
 .date-group-card {
   background-color: #f8fafc;
   border: 1px solid #edf2f7;
-  border-left: 3px solid #3182ce;
-  border-radius: 4px;
-  padding: 14px 16px;
+  border-left: 4px solid #3182ce;
+  border-radius: 6px;
+  padding: 12px 14px;
   text-align: left;
-  box-sizing: border-box;
 }
 
-/* 날짜 타이틀 (세련되고 시원한 폰트) */
 .date-header {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #2d3748;
   letter-spacing: -0.3px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   padding-bottom: 6px;
   border-bottom: 1px solid #e2e8f0;
 }
 
-/* 세부 내용 라인 정렬 */
 .date-content-list {
   display: flex;
   flex-direction: column;
@@ -125,11 +162,10 @@
 }
 
 .content-line {
-  line-height: 1.6;
-  font-size: 0.95rem;
+  line-height: 1.5;
+  font-size: 0.92rem;
 }
 
-/* ; 세부 항목 태그 (날렵한 사각 뱃지) */
 .item-tagged {
   display: flex;
   align-items: center;
@@ -137,28 +173,48 @@
   gap: 6px;
 }
 
-.category-title {
-  font-weight: 600;
-  color: #2d3748;
-}
-
 .detail-badge {
   background-color: #ebf8ff;
   color: #2b6cb0;
   border: 1px solid #bee3f8;
-  padding: 2px 8px;
-  border-radius: 3px;
+  padding: 3px 8px;
+  border-radius: 4px;
   font-size: 0.85rem;
   font-weight: 500;
+  word-break: break-word;
 }
 
-.plain-text {
-  color: #4a5568;
+/* 8. 외부 링크 버튼 섹션 */
+.link-section {
+  margin-top: 24px;
+  text-align: center;
 }
 
-/* 관리자 모드 스타일 */
+.link-section h3 {
+  font-size: 1rem;
+  color: #2d3748;
+  margin-bottom: 10px;
+}
+
+.link-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #2b6cb0;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.link-btn:hover {
+  background-color: #2c5282;
+}
+
+/* 9. 관리자 모드 관련 */
 .admin-bar {
-  margin-top: 12px;
+  margin-top: 10px;
   text-align: right;
 }
 
@@ -166,8 +222,8 @@
   background-color: #4a5568;
   color: #fff;
   border: none;
-  padding: 5px 10px;
-  border-radius: 3px;
+  padding: 6px 12px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 0.8rem;
 }
@@ -179,8 +235,8 @@
 .admin-editor-box {
   background-color: #f7fafc;
   border: 1px dashed #cbd5e0;
-  padding: 16px;
-  border-radius: 4px;
+  padding: 14px;
+  border-radius: 6px;
   margin-bottom: 20px;
   text-align: left;
 }
@@ -188,7 +244,7 @@
 .admin-editor-box label {
   display: block;
   margin-bottom: 12px;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .admin-editor-box textarea {
@@ -196,14 +252,13 @@
   margin-top: 6px;
   padding: 8px;
   border: 1px solid #cbd5e0;
-  border-radius: 3px;
-  box-sizing: border-box;
+  border-radius: 4px;
   font-family: inherit;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .admin-tip {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: #718096;
   line-height: 1.5;
   margin-bottom: 12px;
@@ -215,19 +270,11 @@
   border: none;
   padding: 8px 16px;
   font-weight: 600;
-  border-radius: 3px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-/* 푸터 */
-.church-footer {
-  text-align: center;
-  margin-top: 2.5rem;
-  color: #a0aec0;
-  font-size: 0.85rem;
-}
-
-/* 비밀번호 모달 */
+/* 10. 모달 레이아웃 */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -241,71 +288,47 @@
 .modal-content {
   background: white;
   padding: 20px;
-  border-radius: 6px;
-  width: 280px;
+  border-radius: 8px;
+  width: 85%;
+  max-width: 300px;
   text-align: center;
 }
 
 .modal-content input {
-  width: 85%;
+  width: 90%;
   padding: 8px;
   margin: 12px 0;
   border: 1px solid #cbd5e0;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 .modal-buttons button {
   margin: 0 4px;
   padding: 6px 12px;
-  border-radius: 3px;
+  border-radius: 4px;
   border: 1px solid #cbd5e0;
   cursor: pointer;
 }
 
-/* 관련 링크 섹션 스타일 */
-.link-section {
-  margin-top: 20px;
+/* 11. 푸터 */
+.church-footer {
   text-align: center;
+  margin-top: 2rem;
+  color: #a0aec0;
+  font-size: 0.82rem;
 }
 
-.link-section h3 {
-  font-size: 1.1rem;
-  color: #2d3748;
-  margin-bottom: 12px;
-}
+/* 12. 태블릿 및 데스크톱 모드 대응 (PC 스타일 보정) */
+@media (min-width: 640px) {
+  #root {
+    padding: 2rem 1rem;
+  }
 
-.link-btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #2b6cb0;
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  border-radius: 4px;
-  transition: background-color 0.15s ease-in-out;
-}
+  .church-nav {
+    justify-content: center;
+  }
 
-.link-btn:hover {
-  background-color: #2c5282;
-  color: #ffffff;
-}
-/* 유튜브 반응형 비디오 컨테이너 */
-.video-container {
-  position: relative;
-  width: 100%;
-  padding-bottom: 56.25%; /* 16:9 비율 유지 */
-  height: 0;
-  overflow: hidden;
-  border-radius: 6px;
-  margin-bottom: 20px;
-}
-
-.video-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
+  .tab-content {
+    padding: 1.75rem;
+  }
 }
