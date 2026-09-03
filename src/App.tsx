@@ -4,7 +4,6 @@ import { db } from './firebase'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 import headerImg from './assets/header.jpg'
-import introImg from './assets/intro.jpg'
 import worshipImg from './assets/worship.jpg'
 import locationImg from './assets/location.jpg'
 
@@ -256,9 +255,17 @@ function App() {
         {/* 1. 교회소개 */}
         {activeTab === 'about' && (
           <section className="tab-content">
-            <h2>교회 소개</h2>
-            <img src={introImg} alt="교회 소개" className="content-img" />
-            <p>우리 교회는 말씀을 중심으로 이웃을 섬기며 사랑을 나누는 공동체입니다.</p>
+            <h2>당신은 예수님을 믿어야 합니다.</h2>
+            <div className="video-container">
+              <iframe
+                src="https://www.youtube.com/embed/L-wvdG55Ot4"
+                title="Who is Jesus? (Inspiration video) Billy Graham"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+
+            <p style={{ marginTop: '16px' }}>'예수께서 이르시되 내가 곧 길이요 진리요 생명이니 나로 말미암지 않고는 아버지께로 올 자가 없느니라'(요 14:6)</p>
             <hr style={{ margin: '30px 0', border: '0', borderTop: '1px solid #eee' }} />
 
             <h2>예배 안내</h2>
@@ -267,6 +274,20 @@ function App() {
 
             <h2>오시는 길</h2>
             <img src={locationImg} alt="약도" className="content-img" />
+
+            {/* 👇 여기부터 추가하는 링크 버튼 섹션입니다 */}
+            <hr style={{ margin: '30px 0', border: '0', borderTop: '1px solid #eee' }} />
+            <div className="link-section">
+              <h3>관련 링크</h3>
+              <a 
+                href="https://moving-thai.vercel.app/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="link-btn"
+              >
+                무빙타이
+              </a>
+            </div>
           </section>
         )}
 
