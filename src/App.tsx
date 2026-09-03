@@ -98,7 +98,7 @@ function App() {
 
   // 제목(/) 및 줄바꿈/항목(;) 단위 파싱 함수
   const renderScheduleContent = (text: string) => {
-    if (!text) return <p>등록된 내용이 없습니다.</p>
+    if (!text) return <p style={{ color: '#94a3b8', textAlign: 'center', padding: '20px 0' }}>등록된 내용이 없습니다.</p>
 
     // 세미콜론(;) 기준으로 세션 블록 분할
     const blocks = text.split(';').map(b => b.trim()).filter(Boolean)
@@ -126,7 +126,7 @@ function App() {
 
           return (
             <div key={idx} className="date-group-card">
-              {title && <div className="date-header">📌 {title}</div>}
+              {title && <div className="date-header">🌱 {title}</div>}
               <div className="date-content-list">
                 {lines.map((line, lineIdx) => (
                   <div key={lineIdx} className="content-line item-tagged">
@@ -147,7 +147,7 @@ function App() {
       <header className="church-header">
         <img src={headerImg} alt="Moving Church 메인" className="header-img" />
         <h1>Moving Church</h1>
-        <p className="subtitle">하나님의 사랑이 가득한 공동체</p>
+        <p className="subtitle">봄날의 따스함처럼, 하나님의 사랑이 가득한 공동체</p>
 
         {/* 관리자 모드 접속 버튼 */}
         <div className="admin-bar">
@@ -167,7 +167,7 @@ function App() {
       {showPasswordModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h3>관리자 비밀번호 입력</h3>
+            <h3 style={{ fontSize: '1.1rem', marginBottom: '8px' }}>관리자 비밀번호 입력</h3>
             <input
               type="password"
               placeholder="비밀번호"
@@ -176,7 +176,7 @@ function App() {
               onKeyDown={(e) => e.key === 'Enter' && handleAdminLogin()}
             />
             <div className="modal-buttons">
-              <button onClick={handleAdminLogin}>확인</button>
+              <button style={{ background: '#f472b6', color: '#fff', border: 'none' }} onClick={handleAdminLogin}>확인</button>
               <button onClick={() => setShowPasswordModal(false)}>취소</button>
             </div>
           </div>
@@ -207,7 +207,7 @@ function App() {
         {/* 관리자 모드 데이터 수정 폼 */}
         {isAdmin && (
           <div className="admin-editor-box">
-            <h3>✏️ 관리자 내용 수정하기</h3>
+            <h3 style={{ marginBottom: '8px' }}>✏️ 관리자 내용 수정하기</h3>
             <p className="admin-tip">
               💡 작성 방법:<br />
               - 제목: <code>1월/</code><br />
@@ -217,7 +217,7 @@ function App() {
             <label>
               <strong>이번 달 일정:</strong>
               <textarea
-                rows={8}
+                rows={6}
                 value={editForm.monthly}
                 onChange={(e) => setEditForm({ ...editForm, monthly: e.target.value })}
               />
@@ -225,7 +225,7 @@ function App() {
             <label>
               <strong>사역 내용:</strong>
               <textarea
-                rows={8}
+                rows={6}
                 value={editForm.ministry}
                 onChange={(e) => setEditForm({ ...editForm, ministry: e.target.value })}
               />
@@ -233,7 +233,7 @@ function App() {
             <label>
               <strong>2026 주요 사업:</strong>
               <textarea
-                rows={8}
+                rows={6}
                 value={editForm.yearly}
                 onChange={(e) => setEditForm({ ...editForm, yearly: e.target.value })}
               />
@@ -241,7 +241,7 @@ function App() {
             <label>
               <strong>멤버 목록:</strong>
               <textarea
-                rows={8}
+                rows={6}
                 value={editForm.members}
                 onChange={(e) => setEditForm({ ...editForm, members: e.target.value })}
               />
@@ -255,7 +255,7 @@ function App() {
         {/* 1. 교회소개 */}
         {activeTab === 'about' && (
           <section className="tab-content">
-            <h2>당신은 예수님을 믿어야 합니다.</h2>
+            <h2>✨ 당신은 예수님을 믿어야 합니다.</h2>
             <div className="video-container">
               <iframe
                 src="https://www.youtube.com/embed/L-wvdG55Ot4"
@@ -265,18 +265,21 @@ function App() {
               ></iframe>
             </div>
 
-            <p style={{ marginTop: '16px' }}>'예수께서 이르시되 내가 곧 길이요 진리요 생명이니 나로 말미암지 않고는 아버지께로 올 자가 없느니라'(요 14:6)</p>
-            <hr style={{ margin: '30px 0', border: '0', borderTop: '1px solid #eee' }} />
+            <p style={{ marginTop: '16px', lineHeight: '1.6', color: '#0369a1', background: '#f0f9ff', padding: '12px 16px', borderRadius: '12px', borderLeft: '4px solid #38bdf8' }}>
+              '예수께서 이르시되 내가 곧 길이요 진리요 생명이니 나로 말미암지 않고는 아버지께로 올 자가 없느니라' (요 14:6)
+            </p>
 
-            <h2>예배 안내</h2>
-            <img src={worshipImg} alt="예배 모습" className="content-img" />
-            <hr style={{ margin: '30px 0', border: '0', borderTop: '1px solid #eee' }} />
+            <div style={{ margin: '30px 0 16px' }}>
+              <h2>🙏 예배 안내</h2>
+              <img src={worshipImg} alt="예배 모습" className="content-img" />
+            </div>
 
-            <h2>오시는 길</h2>
-            <img src={locationImg} alt="약도" className="content-img" />
+            <div style={{ margin: '30px 0 16px' }}>
+              <h2>📍 오시는 길</h2>
+              <img src={locationImg} alt="약도" className="content-img" />
+            </div>
 
-            {/* 👇 여기부터 추가하는 링크 버튼 섹션입니다 */}
-            <hr style={{ margin: '30px 0', border: '0', borderTop: '1px solid #eee' }} />
+            {/* 링크 버튼 섹션 */}
             <div className="link-section">
               <h3>관련 링크</h3>
               <a 
@@ -285,7 +288,7 @@ function App() {
                 rel="noopener noreferrer" 
                 className="link-btn"
               >
-                무빙타이
+                🌿 무빙타이 바로가기
               </a>
             </div>
           </section>
