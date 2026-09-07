@@ -224,6 +224,7 @@ body {
   display: inline-block;
   width: 100%; /* 모바일에서 누르기 쉽게 가로 꽉 차게 설정 */
   max-width: 280px;
+  margin: 0 4px; /* 양옆에 4px씩, 총 8px 간격 형성 */;
   padding: 12px 20px;
   background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
   color: #ffffff;

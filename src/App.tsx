@@ -288,7 +288,15 @@ function App() {
                 rel="noopener noreferrer" 
                 className="link-btn"
               >
-                🌿 무빙타이 바로가기
+                🌿 무빙타이
+              </a>
+              <a 
+                href="https://movingcambodia.vercel.app/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="link-btn"
+              >
+                🌿 무빙캄보디아
               </a>
             </div>
           </section>
