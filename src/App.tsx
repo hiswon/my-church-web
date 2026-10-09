@@ -20,14 +20,14 @@ function App() {
     {
       id: 1,
       subTitle: "Moving Church",
-      mainTitle: "무빙처치 1",
+      mainTitle: "무빙처치",
       highlightText: "하나님은 당신을 사랑하십니다.",
       bibleVerse: "요한복음 3장 16절",
     },
     {
       id: 2,
       subTitle: "Moving Church",
-      mainTitle: "무빙처치 2",
+      mainTitle: "하나님은 당신을 사랑하십니다.",
       highlightText: "너는 도우시는 이가 누구인가",
       bibleVerse: "시편 121편 1-2절",
     },
@@ -48,16 +48,17 @@ function App() {
           const bgImage = imageSrcs.length > 0 ? imageSrcs[index % imageSrcs.length] : '';
           return (
             <div className="content-box" key={slide.id}>
-              {/* 글자 왼쪽의 순서별 사진 */}
-              <img 
-                src={bgImage} 
-                alt={`Slide ${index + 1}`} 
-                className="slide-image"
-                onError={(e) => {
-                  // 이미지가 없을 경우 대체 화면 처리 (선택사항)
-                  (e.target as HTMLElement).style.display = 'none';
-                }}
-              />
+              <div className="img-item">
+                <img 
+                  src={bgImage} 
+                  alt={`Slide ${index + 1}`} 
+                  className="img-wrapper"
+                  onError={(e) => {
+                    // 이미지가 없을 경우 대체 화면 처리 (선택사항)
+                    (e.target as HTMLElement).style.display = 'none';
+                  }}
+                />
+              </div>
               
               {/* 우측 텍스트 그룹 */}
               <div className="text-group">
