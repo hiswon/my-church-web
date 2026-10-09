@@ -51,11 +51,10 @@
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
+  width: 100%;          /* 1126px 고정 해제 */
+  max-width: none;      /* 최대 너비 제한 해제 */
+  margin: 0;
+  border-inline: none;  /* 양옆 테두리 제거 */
   min-height: 100svh;
   display: flex;
   flex-direction: column;
